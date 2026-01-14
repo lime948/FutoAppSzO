@@ -8,40 +8,47 @@ namespace FutoApp.Models
 {
     class Training
     {
-        public DateTime Datum { get; set; }
-        public double Tav { get; set; }
-        public TimeSpan Idotartam { get; set; }
-        public int MaxPulzus { get; set; }
+        private DateTime datum;
+        private double tav;
+        private TimeSpan idotartam;
+        private int maxPulzus;
 
         public Training(DateTime datum, double tav, TimeSpan idotartam, int maxPulzus)
         {
-            Datum = datum;
-            Tav = tav;
-            Idotartam = idotartam;
-            MaxPulzus = maxPulzus;
+            this.datum = datum;
+            this.tav = tav;
+            this.idotartam = idotartam;
+            this.maxPulzus = maxPulzus;
         }
+
+        public Training() { }
+
+        public DateTime Datum { get => datum; set => datum = value; }
+        public double Tav { get => tav; set => tav = value; }
+        public TimeSpan Idotartam { get => idotartam; set => idotartam = value; }
+        public int MaxPulzus { get => maxPulzus; set => maxPulzus = value; }
     }
     class Runner
     {
-        public double Magassag { get; set; }
-        public double Testtomeg { get; set; }
-        public int NyugalmiPulzus { get; set; }
-        public TimeSpan CelIdo { get; set; }
+        private double magassag;
+        private double testtomeg;
+        private int nyugalmiPulzus;
+        private TimeSpan celIdo;
 
-        public List<Training> Edzesek { get; set; }
+        public double Magassag { get => magassag; set => magassag = value; }
+        public double Testtomeg { get => testtomeg; set => testtomeg = value; }
+        public int NyugalmiPulzus { get => nyugalmiPulzus; set => nyugalmiPulzus = value; }
+        public TimeSpan CelIdo { get => celIdo; set => celIdo = value; }
+
+        public Runner() { }
 
         public Runner(double magassag, double testtomeg, int nyugalmiPulzus, TimeSpan celIdo)
         {
-            Magassag = magassag;
-            Testtomeg = testtomeg;
-            NyugalmiPulzus = nyugalmiPulzus;
-            CelIdo = celIdo;
-            Edzesek = new List<Training>();
+            this.Magassag = magassag;
+            this.Testtomeg = testtomeg;
+            this.NyugalmiPulzus = nyugalmiPulzus;
+            this.CelIdo = celIdo;
         }
 
-        public void UjEdzes(Training edzes)
-        {
-            Edzesek.Add(edzes);
-        }
     }
 }
