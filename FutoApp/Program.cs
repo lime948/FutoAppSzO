@@ -1,6 +1,7 @@
 ﻿using FutoApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime;
 using System.Text;
@@ -10,69 +11,51 @@ namespace FutoApp
 {
     internal class Program
     {
+
+        public static List<Training> edzesadatok = new List<Training>();
+        public static List<Runner> futoadatok = new List<Runner>();
+
         static void Main(string[] args)
         {
-            WriteLineCentered("=== FUTÓ EDZÉS NAPLÓ ===");
-            WriteLineCentered("1. Regisztráció");
-            WriteLineCentered("2. Bejelentkezés");
-            WriteLineCentered("3. Kilépés");
-            WriteLineCentered("-------------------------");
-            WriteCentered("Válassza ki a menüpontot: ");
-            int menu = int.Parse(Console.ReadLine());
-            switch (menu)
-            {
-                case 1:
-                    // Regisztráció
-                    break;
-                case 2:
-                    // Bejelentkezés
-                    break;
-                case 3:
-                    // Kilépés
-                    break;
-                default:
-                    WriteLineCentered("Érvénytelen menüpont!");
-                    break;
-            }
-            //Runner futo = new Runner(
-            //    magassag: 178,
-            //    testtomeg: 72,
-            //    nyugalmiPulzus: 55,
-            //    celIdo: new TimeSpan(0, 22, 0)
-            //);
-
-            //Training edzes1 = new Training(
-            //    datum: new DateTime(2026, 1, 10),
-            //    tav: 5.2,
-            //    idotartam: new TimeSpan(0, 27, 45),
-            //    maxPulzus: 178
-            //);
-
-            //futo.UjEdzes(edzes1);
-
-            //Console.WriteLine("Edzések száma: " + futo.Edzesek.Count);
-            //Console.WriteLine("Első edzés dátuma: " + futo.Edzesek[0].Datum.ToShortDateString());
+            edzeshozzaadas();
+            futohozzaadas();
         }
 
-        public static void WriteLineCentered(string text, bool changeColor = true)
+        static void edzeshozzaadas()
         {
-            int width = Console.WindowWidth;
-            int leftPadding = (width - text.Length) / 2;
-            if (leftPadding < 0)
-            {
-                leftPadding = 0;
-            }
-            Console.WriteLine(new string(' ', leftPadding) + text);
+            Console.Clear();
+            Console.WriteLine("Edzés hozzáadás: ");
+            Console.WriteLine("Add mega dátumot:");
+            DateTime datum = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Add meg a távot:");
+            Double tav = Double.Parse(Console.ReadLine());
+            Console.WriteLine("Add meg az időtartamot:");
+            TimeSpan idotartam = TimeSpan.Parse(Console.ReadLine());
+            Console.WriteLine("Add meg a max pulzusod:");
+            int maxpulzus = int.Parse(Console.ReadLine());
+
+            Training adathozzaadas1 = new Training(datum, tav, idotartam, maxpulzus);
+            edzesadatok.Add(adathozzaadas1);
+
         }
-        public static void WriteCentered(string text, bool changeColor = true)
+
+        static void futohozzaadas()
         {
-            int width = Console.WindowWidth;
-            int leftPadding = (width - text.Length) / 2;
-            if (leftPadding < 0)
-            {
-                leftPadding = 0;
-            }
-            Console.Write(new string(' ', leftPadding) + text);
+            Console.Clear();
+            Console.WriteLine("Futó hozzáadás: ");
+            Console.WriteLine("Add meg a magasságod (cm):");
+            double magassag = double.Parse(Console.ReadLine());
+            Console.WriteLine("Add meg a testtömeged (kg):");
+            double testtomeg = double.Parse(Console.ReadLine());
+            Console.WriteLine("Add meg a nyugalmi pulzusod:");
+            int nyugalmiPulzus = int.Parse(Console.ReadLine());
+            Console.WriteLine("Add meg a célidőt 5 km-re (óó:pp:mp):");
+            TimeSpan celIdo = TimeSpan.Parse(Console.ReadLine());
+
+            Runner futohozzaadas1 = new Runner(magassag, testtomeg, nyugalmiPulzus, celIdo);
+            futoadatok.Add(futohozzaadas1);
         }
+
     }
 }
+
