@@ -8,33 +8,40 @@ namespace FutoApp.Models
 {
     class Training
     {
+        public int id;
         private DateTime datum;
         private double tav;
         private TimeSpan idotartam;
         private int maxPulzus;
 
-        public Training(DateTime datum, double tav, TimeSpan idotartam, int maxPulzus)
-        {
-            this.datum = datum;
-            this.tav = tav;
-            this.idotartam = idotartam;
-            this.maxPulzus = maxPulzus;
-        }
-
-        public Training() { }
-
+        public int Id { get => id; set => id = value; }
         public DateTime Datum { get => datum; set => datum = value; }
         public double Tav { get => tav; set => tav = value; }
         public TimeSpan Idotartam { get => idotartam; set => idotartam = value; }
         public int MaxPulzus { get => maxPulzus; set => maxPulzus = value; }
+
+        public Training() { }
+
+        public Training(int id, DateTime datum, double tav, TimeSpan idotartam, int maxPulzus)
+        {
+            this.Id = id;
+            this.Datum = datum;
+            this.Tav = tav;
+            this.Idotartam = idotartam;
+            this.MaxPulzus = maxPulzus;
+        }
     }
     class Runner
     {
+        private string nev;
+        private string jelszo;
         private double magassag;
         private double testtomeg;
         private int nyugalmiPulzus;
         private TimeSpan celIdo;
 
+        public string Nev { get => nev; set => nev = value; }
+        public string Jelszo { get => jelszo; set => jelszo = value; }
         public double Magassag { get => magassag; set => magassag = value; }
         public double Testtomeg { get => testtomeg; set => testtomeg = value; }
         public int NyugalmiPulzus { get => nyugalmiPulzus; set => nyugalmiPulzus = value; }
@@ -42,8 +49,10 @@ namespace FutoApp.Models
 
         public Runner() { }
 
-        public Runner(double magassag, double testtomeg, int nyugalmiPulzus, TimeSpan celIdo)
+        public Runner(string nev, string jelszo, double magassag, double testtomeg, int nyugalmiPulzus, TimeSpan celIdo)
         {
+            this.Nev = nev;
+            this.Jelszo = jelszo;
             this.Magassag = magassag;
             this.Testtomeg = testtomeg;
             this.NyugalmiPulzus = nyugalmiPulzus;
