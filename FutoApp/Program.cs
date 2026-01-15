@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FutoApp
 {
@@ -21,30 +22,68 @@ namespace FutoApp
 
         static void Main(string[] args)
         {
-            listafeltoltes();
-            futohozzaadas();
-            bejelentkezes();
-            if (bejelentkezve)
-            {
-                edzeshozzaadas();
-            }
+            Fomenu();
+        }
 
-            
+        static void Fomenu()
+        {
+            while (true)
+            {
+                Console.Clear();
+                WriteLineCentered("=== FUTÓ EDZÉS NAPLÓ ===");
+                WriteLineCentered("1. Regisztráció");
+                WriteLineCentered("2. Bejelentkezés");
+                WriteLineCentered("3. Kilépés");
+                WriteLineCentered("-------------------------");
+                WriteCentered("Válassza ki a menüpontot: ");
+                int menu = int.Parse(Console.ReadLine());
+                Console.WriteLine("");
+                switch (menu)
+                {
+                    case 1:
+                        futohozzaadas();
+                        break;
+                    case 2:
+                        bejelentkezes();
+                        while (bejelentkezve == true)
+                        {
+                            Bejelentkezve();
+                        }
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        WriteLineCentered("Érvénytelen menüpont!");
+                        Console.ResetColor();
+                        Console.ReadLine();
+                        break;
+                }
+            }
         }
 
         static void edzeshozzaadas()
         {
             try
             {
+                if (!bejelentkezve)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    WriteLineCentered("Előbb jelentkezz be!");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                    return;
+                }
+
                 Console.Clear();
-                Console.WriteLine("Edzés hozzáadás: ");
-                Console.Write("Add meg a dátumot (éééé-hh-nn):");
+                WriteLineCentered("Edzés hozzáadás: ");
+                WriteCentered("Add meg a dátumot: ");
                 DateTime datum = DateTime.Parse(Console.ReadLine());
-                Console.Write("Add meg a távot (km):");
+                WriteCentered("Add meg a távot: ");
                 Double tav = Double.Parse(Console.ReadLine());
-                Console.Write("Add meg az időtartamot (óó:pp:mp):");
+                WriteCentered("Add meg az időtartamot: ");
                 TimeSpan idotartam = TimeSpan.Parse(Console.ReadLine());
-                Console.Write("Add meg a max pulzusod:");
+                WriteCentered("Add meg a max pulzusod: ");
                 int maxpulzus = int.Parse(Console.ReadLine());
 
                 string osszefuzottadatok = $"{datum};{tav};{idotartam};{maxpulzus}\n";
@@ -67,25 +106,27 @@ namespace FutoApp
             {
                 int darab = felhasznaloadatok.Count;
                 Console.Clear();
-                Console.WriteLine("Futó hozzáadás: ");
-                Console.Write("Add meg a felhasználóneved:");
+                WriteLineCentered("=== REGISZTRÁCIÓ ===");
+                WriteCentered("Add meg a felhasználóneved: ");
                 string nev = Console.ReadLine();
-                Console.Write("Add meg a jelszavad:");
+                WriteCentered("Add meg a jelszavad: ");
                 string jelszo = Console.ReadLine();
-                Console.Write("Add meg a magasságod (cm):");
+                WriteCentered("Add meg a magasságod (cm): ");
                 double magassag = double.Parse(Console.ReadLine());
-                Console.Write("Add meg a testtömeged (kg):");
+                WriteCentered("Add meg a testtömeged (kg): ");
                 double testtomeg = double.Parse(Console.ReadLine());
-                Console.Write("Add meg a nyugalmi pulzusod:");
+                WriteCentered("Add meg a nyugalmi pulzusod: ");
                 int nyugalmiPulzus = int.Parse(Console.ReadLine());
-                Console.Write("Add meg a célidőt 5 km-re (óó:pp:mp):");
+                WriteCentered("Add meg a célidőt 5 km-re (óó:pp:mp): ");
                 TimeSpan celIdo = TimeSpan.Parse(Console.ReadLine());
+                Console.WriteLine("");
 
                 foreach (var v in felhasznaloadatok)
                 {
                     if (v.Nev == nev)
                     {
-                        Console.WriteLine("Ez a felhasználónév már létezik!");
+
+                        WriteLineCentered("Ez a felhasználónév már létezik!");
                         Console.ReadLine();
                         return;
                     }
@@ -97,12 +138,11 @@ namespace FutoApp
                 File.AppendAllText($"{nev}felhasznalo.txt", "");
                 File.AppendAllText($"Felhasznalok.txt", osszefuzottadatok);
                 bejelentkezettnev = nev;
-                felhasznaloadatok.Add(futohozzaadas1);
-            }
-            catch
-            {
-                Console.WriteLine("Hibás input! Enter a tovább lépéshez!");
-                Console.ReadLine();
+                futoadatok.Add(futohozzaadas1);
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                WriteLineCentered("Sikeres regisztráció!");
+                Console.ResetColor();
             }
         }
 
@@ -111,15 +151,22 @@ namespace FutoApp
             try
             {
                 Console.Clear();
-                Console.WriteLine("Bejelentkezés");
-                Console.Write("Add meg a felhasználóneved: ");
+                WriteLineCentered("=== BEJELENTKEZÉS ===");
+                WriteCentered("Add meg a felhasználóneved: ");
                 string nev = Console.ReadLine();
-                Console.Write("Add meg a jelszavad: ");
+                WriteCentered("Add meg a jelszavad: ");
                 string jelszo = Console.ReadLine();
+                Console.WriteLine("");
 
                 bejelentkezve = false;
 
-                for (int i = 0; i < felhasznaloadatok.Count; i++)
+                if (nev == "admin" && jelszo == "admin")
+                {
+                    Admin();
+                    return;
+                }
+
+                for (int i = 0; i < futoadatok.Count; i++)
                 {
                     if (felhasznaloadatok[i].Nev == nev && felhasznaloadatok[i].Jelszo == jelszo)
                     {
@@ -127,22 +174,110 @@ namespace FutoApp
                         bejelentkezettlistapozicio = i;
                         bejelentkezettnev = nev;
 
-                        Console.WriteLine("Sikeres bejelentkezés!");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        WriteLineCentered("Sikeres bejelentkezés!");
+                        Console.ResetColor();
                         Console.ReadLine();
                         return;
                     }
                 }
-
-                Console.WriteLine("Sikertelen bejelentkezés!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                WriteLineCentered("Sikertelen bejelentkezés!");
+                Console.ResetColor();
                 Console.ReadLine();
             }
-            catch
+            catch { }
+        }
+
+        static void Bejelentkezve()
+        {
+            Console.Clear();
+            WriteLineCentered("=== FELHASZNÁLÓI MENÜ ===");
+            WriteLineCentered("1. Edzés hozzáadás");
+            WriteLineCentered("2. Edzések megtekintése");
+            WriteLineCentered("3. Kijelentkezés");
+            WriteLineCentered("-------------------------");
+            WriteCentered("Válassza ki a menüpontot: ");
+            int menu = int.Parse(Console.ReadLine());
+            Console.WriteLine("");
+            switch (menu)
             {
-                Console.WriteLine("Hibás input! Enter a tovább lépéshez!");
-                Console.ReadLine();
+                case 1:
+                    edzeshozzaadas();
+                    break;
+                case 2:
+                    // Edzések megtekintése
+                    break;
+                case 3:
+                    bejelentkezve = false;
+                    bejelentkezettlistapozicio = 0;
+                    bejelentkezettnev = "";
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    WriteLineCentered("Érvénytelen menüpont!");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                    return;
             }
         }
 
+        static void Admin()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            WriteLineCentered("=== ADMIN MENÜ ===");
+            WriteLineCentered("1. Felhasználók listázása");
+            WriteLineCentered("2. Felhasználó módosítása");
+            WriteLineCentered("3. Felhasználó törlése");
+            WriteLineCentered("4. Vissza a főmenübe");
+            WriteLineCentered("-------------------------");
+            WriteCentered("Válassza ki a menüpontot: ");
+            int menu = int.Parse(Console.ReadLine());
+            Console.WriteLine("");
+            switch (menu)
+            {
+                case 1:
+                    // Felhasználók listázása
+                    break;
+                case 2:
+                    // Felhasználó módosítása
+                    break;
+                case 3:
+                    // Felhasználó törlése
+                    break;
+                case 4:
+                    return;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    WriteLineCentered("Érvénytelen menüpont!");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                    return;
+            }
+            catch { }
+        }
+
+        public static void WriteLineCentered(string text)
+        {
+            int width = Console.WindowWidth;
+            int leftPadding = (width - text.Length) / 2;
+            if (leftPadding < 0)
+            {
+                leftPadding = 0;
+            }
+            Console.WriteLine(new string(' ', leftPadding) + text);
+        }
+        public static void WriteCentered(string text)
+        {
+            int width = Console.WindowWidth;
+            int leftPadding = (width - text.Length) / 2;
+            if (leftPadding < 0)
+            {
+                leftPadding = 0;
+            }
+            Console.Write(new string(' ', leftPadding) + text);
+        }
         static void listafeltoltes()
         {
             foreach (var v in File.ReadAllLines("Felhasznalok.txt"))
