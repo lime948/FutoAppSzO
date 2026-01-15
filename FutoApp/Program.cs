@@ -36,6 +36,7 @@ namespace FutoApp
                 WriteLineCentered("3. Kilépés");
                 WriteLineCentered("-------------------------");
                 WriteCentered("Válassza ki a menüpontot: ");
+                listafeltoltes();
                 int menu = int.Parse(Console.ReadLine());
                 Console.WriteLine("");
                 switch (menu)
@@ -138,11 +139,16 @@ namespace FutoApp
                 File.AppendAllText($"{nev}felhasznalo.txt", "");
                 File.AppendAllText($"Felhasznalok.txt", osszefuzottadatok);
                 bejelentkezettnev = nev;
-                futoadatok.Add(futohozzaadas1);
+                felhasznaloadatok.Add(futohozzaadas1);
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 WriteLineCentered("Sikeres regisztráció!");
                 Console.ResetColor();
+            }
+            catch
+            {
+                Console.WriteLine("Hibás input! Nyomj entert a tovább lépéshez!");
+                Console.ReadLine();
             }
         }
 
@@ -166,7 +172,7 @@ namespace FutoApp
                     return;
                 }
 
-                for (int i = 0; i < futoadatok.Count; i++)
+                for (int i = 0; i < felhasznaloadatok.Count; i++)
                 {
                     if (felhasznaloadatok[i].Nev == nev && felhasznaloadatok[i].Jelszo == jelszo)
                     {
@@ -186,7 +192,11 @@ namespace FutoApp
                 Console.ResetColor();
                 Console.ReadLine();
             }
-            catch { }
+            catch 
+            {
+                Console.WriteLine("Hibás input! Nyomj entert a tovább lépéshez!");
+                Console.ReadLine();
+            }
         }
 
         static void Bejelentkezve()
@@ -254,8 +264,7 @@ namespace FutoApp
                     Console.ResetColor();
                     Console.ReadLine();
                     return;
-            }
-            catch { }
+            } 
         }
 
         public static void WriteLineCentered(string text)
