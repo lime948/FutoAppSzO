@@ -42,7 +42,7 @@ namespace FutoApp
                 switch (menu)
                 {
                     case 1:
-                        futohozzaadas();
+                        Regisztralas();
                         break;
                     case 2:
                         bejelentkezes();
@@ -63,7 +63,7 @@ namespace FutoApp
             }
         }
 
-        static void edzeshozzaadas()
+        static void Edzeshozzaadas()
         {
             try
             {
@@ -78,13 +78,13 @@ namespace FutoApp
 
                 Console.Clear();
                 WriteLineCentered("Edzés hozzáadás: ");
-                WriteCentered("Add meg a dátumot: ");
+                WriteCentered("Add meg a dátumot (éééé-hh-nn): ");
                 DateTime datum = DateTime.Parse(Console.ReadLine());
-                WriteCentered("Add meg a távot: ");
+                WriteCentered("Add meg a távot (km): ");
                 Double tav = Double.Parse(Console.ReadLine());
-                WriteCentered("Add meg az időtartamot: ");
+                WriteCentered("Add meg az időtartamot (óó:pp:mm): ");
                 TimeSpan idotartam = TimeSpan.Parse(Console.ReadLine());
-                WriteCentered("Add meg a max pulzusod: ");
+                WriteCentered("Add meg a max pulzusod (pl: 120): ");
                 int maxpulzus = int.Parse(Console.ReadLine());
 
                 string osszefuzottadatok = $"{datum};{tav};{idotartam};{maxpulzus}\n";
@@ -101,7 +101,7 @@ namespace FutoApp
             }
         }
 
-        static void futohozzaadas()
+        static void Regisztralas()
         {
             try
             {
@@ -213,7 +213,7 @@ namespace FutoApp
             switch (menu)
             {
                 case 1:
-                    edzeshozzaadas();
+                    Edzeshozzaadas();
                     break;
                 case 2:
                     // Edzések megtekintése
