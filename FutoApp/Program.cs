@@ -51,7 +51,8 @@ namespace FutoApp
                         }
                         break;
                     case 3:
-                        return;
+                        Environment.Exit(0);
+                        break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
                         WriteLineCentered("Érvénytelen menüpont!");
@@ -62,7 +63,7 @@ namespace FutoApp
             }
         }
 
-        static void edzeshozzaadas()
+        static void EdzesHozzaadas()
         {
             try
             {
@@ -121,8 +122,9 @@ namespace FutoApp
                 {
                     if (v.Nev == nev)
                     {
-
+                        Console.ForegroundColor = ConsoleColor.Red;
                         WriteLineCentered("Ez a felhasználónév már létezik!");
+                        Console.ResetColor();
                         Console.ReadLine();
                         return;
                     }
@@ -158,6 +160,10 @@ namespace FutoApp
 
                 if (nev == "admin" && jelszo == "admin")
                 {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    WriteLineCentered("Sikeres bejelentkezés adminként!");
+                    Console.ResetColor();
+                    Console.ReadLine();
                     Admin();
                     return;
                 }
@@ -191,7 +197,9 @@ namespace FutoApp
             WriteLineCentered("=== FELHASZNÁLÓI MENÜ ===");
             WriteLineCentered("1. Edzés hozzáadás");
             WriteLineCentered("2. Edzések megtekintése");
-            WriteLineCentered("3. Kijelentkezés");
+            WriteLineCentered("3. Edzés módosítása");
+            WriteLineCentered("4. Edzés törlése");
+            WriteLineCentered("5. Kijelentkezés");
             WriteLineCentered("-------------------------");
             WriteCentered("Válassza ki a menüpontot: ");
             int menu = int.Parse(Console.ReadLine());
@@ -199,12 +207,18 @@ namespace FutoApp
             switch (menu)
             {
                 case 1:
-                    edzeshozzaadas();
+                    EdzesHozzaadas();
                     break;
                 case 2:
-                    // Edzések megtekintése
+                    EdzesMegtekintese();
                     break;
                 case 3:
+                    EdzesModositasa();
+                    break;
+                case 4:
+                    EdzesTorlese();
+                    break;
+                case 5:
                     bejelentkezve = false;
                     bejelentkezettlistapozicio = 0;
                     bejelentkezettnev = "";
@@ -218,11 +232,27 @@ namespace FutoApp
             }
         }
 
+        static void EdzesMegtekintese()
+        {
+            
+        }
+
+        static void EdzesModositasa()
+        {
+            
+        }
+
+        static void EdzesTorlese()
+        {
+            
+        }
+
         static void Admin()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Blue;
             WriteLineCentered("=== ADMIN MENÜ ===");
+            Console.ResetColor();
             WriteLineCentered("1. Felhasználók listázása");
             WriteLineCentered("2. Felhasználó módosítása");
             WriteLineCentered("3. Felhasználó törlése");
@@ -234,13 +264,13 @@ namespace FutoApp
             switch (menu)
             {
                 case 1:
-                    // Felhasználók listázása
+                    FelhasznalokListazasa();
                     break;
                 case 2:
-                    // Felhasználó módosítása
+                    FelhasznaloModositasa();
                     break;
                 case 3:
-                    // Felhasználó törlése
+                    FelhasznaloTorlese();
                     break;
                 case 4:
                     return;
@@ -250,6 +280,20 @@ namespace FutoApp
                     Console.ResetColor();
                     Console.ReadLine();
                     return;
+            }
+
+            void FelhasznalokListazasa()
+            {
+                
+            }
+
+            void FelhasznaloModositasa()
+            {
+
+            }
+
+            void FelhasznaloTorlese()
+            {
             }
         }
 
