@@ -8,13 +8,11 @@ namespace FutoApp.Models
 {
     class Training
     {
-        public int id;
         private DateTime datum;
         private double tav;
         private TimeSpan idotartam;
         private int maxPulzus;
-
-        public int Id { get => id; set => id = value; }
+        
         public DateTime Datum { get => datum; set => datum = value; }
         public double Tav { get => tav; set => tav = value; }
         public TimeSpan Idotartam { get => idotartam; set => idotartam = value; }
@@ -22,9 +20,8 @@ namespace FutoApp.Models
 
         public Training() { }
 
-        public Training(int id, DateTime datum, double tav, TimeSpan idotartam, int maxPulzus)
+        public Training(DateTime datum, double tav, TimeSpan idotartam, int maxPulzus)
         {
-            this.Id = id;
             this.Datum = datum;
             this.Tav = tav;
             this.Idotartam = idotartam;
