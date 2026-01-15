@@ -36,7 +36,7 @@ namespace FutoApp
                 WriteLineCentered("3. Kilépés");
                 WriteLineCentered("-------------------------");
                 WriteCentered("Válassza ki a menüpontot: ");
-                listafeltoltes();
+                listabetoltes();
                 int menu = int.Parse(Console.ReadLine());
                 Console.WriteLine("");
                 switch (menu)
@@ -287,7 +287,7 @@ namespace FutoApp
             }
             Console.Write(new string(' ', leftPadding) + text);
         }
-        static void listafeltoltes()
+        static void listabetoltes()
         {
             foreach (var v in File.ReadAllLines("Felhasznalok.txt"))
             {
@@ -305,4 +305,5 @@ namespace FutoApp
         }
     }
 }
+
 
