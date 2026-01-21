@@ -156,9 +156,7 @@ namespace FutoApp
                     WriteError("Sikertelen bejelentkezés!");
                     Console.ReadLine();
                 }
-
-
-        }
+            }
             catch
             {
                 WriteLineCentered("Hibás input! Nyomj entert a tovább lépéshez!");
