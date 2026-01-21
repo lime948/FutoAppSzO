@@ -1,13 +1,7 @@
 ﻿using FutoApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Runtime;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FutoApp
 {
@@ -16,6 +10,7 @@ namespace FutoApp
 
         public static List<Training> edzesadatok = new List<Training>();
         public static List<Runner> felhasznaloadatok = new List<Runner>();
+        public static List<string> aktualisedzesadatok = new List<string>();
         public static bool bejelentkezve = false;
         public static int bejelentkezettlistapozicio = 0;
         public static string bejelentkezettnev = "";
@@ -27,6 +22,7 @@ namespace FutoApp
 
         static void Fomenu()
         {
+            felhasznalobetoltes();
             while (true)
             {
                 Console.Clear();
@@ -36,13 +32,13 @@ namespace FutoApp
                 WriteLineCentered("3. Kilépés");
                 WriteLineCentered("-------------------------");
                 WriteCentered("Válassza ki a menüpontot: ");
-                listabetoltes();
                 string menu = Console.ReadLine();
                 Console.WriteLine("");
                 switch (menu)
                 {
                     case "1":
                         Regisztralas();
+
                         break;
                     case "2":
                         Bejelentkezes();
@@ -150,7 +146,7 @@ namespace FutoApp
                 Runner futohozzaadas1 = new Runner(nev, jelszo, magassag, testtomeg, nyugalmiPulzus, celIdo);
                 File.AppendAllText($"{nev}felhasznalo.txt", "");
                 File.AppendAllText($"Felhasznalok.txt", osszefuzottadatok);
-                bejelentkezettnev = nev;
+
                 felhasznaloadatok.Add(futohozzaadas1);
 
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -175,6 +171,8 @@ namespace FutoApp
                 string nev = Console.ReadLine();
                 WriteCentered("Add meg a jelszavad: ");
                 string jelszo = Console.ReadLine();
+                bejelentkezettnev = nev;
+                edzesadatokbetoltes();
                 Console.WriteLine("");
 
                 bejelentkezve = false;
@@ -295,12 +293,93 @@ namespace FutoApp
         }
         static void EdzesModositasa()
         {
+            try
+            {
+                Console.Clear();
+                WriteLineCentered("=== EDZÉSEK Módosítása ===");
+                WriteLineCentered("");
+                int szamlalo = 1;
+                foreach (var edzes in edzesadatok)
+                {
+                    WriteLineCentered($"{szamlalo}. Dátum: {edzes.Datum.ToShortDateString()}, Táv: {edzes.Tav} km, Időtartam: {edzes.Idotartam}, Max pulzus: {edzes.MaxPulzus}");
+                    szamlalo++;
+                }
 
+                WriteCentered("Add meg a módosítandó adat sorszámát: ");
+                int sorszam = int.Parse(Console.ReadLine());
+                WriteCentered("Add meg a dátumot (éééé-hh-nn): ");
+                DateTime datum = DateTime.Parse(Console.ReadLine());
+                WriteCentered("Add meg a távot (km): ");
+                Double tav = Double.Parse(Console.ReadLine());
+                WriteCentered("Add meg az időtartamot (óó:pp:mm): ");
+                TimeSpan idotartam = TimeSpan.Parse(Console.ReadLine());
+                WriteCentered("Add meg a max pulzusod (pl: 120): ");
+                int maxpulzus = int.Parse(Console.ReadLine());
+
+                string osszefuzottadatok = $"{datum};{tav};{idotartam};{maxpulzus}\n";
+
+                edzesadatok.RemoveAt(sorszam-1);
+                Training adathozzaadas1 = new Training(datum, tav, idotartam, maxpulzus);
+                edzesadatok.Insert(sorszam-1, adathozzaadas1);
+
+                
+                foreach (var v in felhasznaloadatok)
+                {
+                    if (v.Nev == bejelentkezettnev)
+                    {
+                        File.WriteAllText($"{bejelentkezettnev}felhasznalo.txt", "");
+                        File.AppendAllText($"{bejelentkezettnev}felhasznalo.txt", $"{v.Nev};{v.Jelszo};{v.Magassag};{v.Testtomeg};{v.NyugalmiPulzus};{v.CelIdo}\n");
+                        foreach (var v1 in edzesadatok)
+                        {
+                            File.AppendAllText($"{bejelentkezettnev}felhasznalo.txt", $"{v1.Datum};{v1.Tav};{v1.Idotartam};{v1.MaxPulzus}\n");
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                WriteLineCentered("Hibás input! Enter a tovább lépéshez!");
+                Console.ReadLine();
+            }
         }
 
         static void EdzesTorlese()
         {
+            try
+            {
+                Console.Clear();
+                WriteLineCentered("=== EDZÉSEK Törlése ===");
+                WriteLineCentered("");
+                int szamlalo = 1;
+                foreach (var edzes in edzesadatok)
+                {
+                    WriteLineCentered($"{szamlalo}. Dátum: {edzes.Datum.ToShortDateString()}, Táv: {edzes.Tav} km, Időtartam: {edzes.Idotartam}, Max pulzus: {edzes.MaxPulzus}");
+                    szamlalo++;
+                }
 
+                WriteCentered("Add meg a törlendő adat sorszámát: ");
+                int sorszam = int.Parse(Console.ReadLine());
+
+                edzesadatok.RemoveAt(sorszam - 1);
+
+                foreach (var v in felhasznaloadatok)
+                {
+                    if (v.Nev == bejelentkezettnev)
+                    {
+                        File.WriteAllText($"{bejelentkezettnev}felhasznalo.txt", "");
+                        File.AppendAllText($"{bejelentkezettnev}felhasznalo.txt", $"{v.Nev};{v.Jelszo};{v.Magassag};{v.Testtomeg};{v.NyugalmiPulzus};{v.CelIdo}\n");
+                        foreach (var v1 in edzesadatok)
+                        {
+                            File.AppendAllText($"{bejelentkezettnev}felhasznalo.txt", $"{v1.Datum};{v1.Tav};{v1.Idotartam};{v1.MaxPulzus}\n");
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                WriteLineCentered("Hibás input! Enter a tovább lépéshez!");
+                Console.ReadLine();
+            }
         }
 
         static void Beallitasok()
@@ -752,20 +831,24 @@ namespace FutoApp
             }
             Console.Write(new string(' ', leftPadding) + text);
         }
-        static void listabetoltes()
+        static void felhasznalobetoltes()
         {
             foreach (var v in File.ReadAllLines("Felhasznalok.txt"))
             {
                 string[] adatok = v.Split(';');
                 Runner futohozzaadas1 = new Runner(adatok[0], adatok[1], int.Parse(adatok[2]), int.Parse(adatok[3]), int.Parse(adatok[4]), TimeSpan.Parse(adatok[5]));
                 felhasznaloadatok.Add(futohozzaadas1);
-                string nev = adatok[0];
-                foreach (var v1 in File.ReadAllLines($"{nev}felhasznalo.txt"))
-                {
-                    string[] adatok2 = v1.Split(';');
-                    Training adathozzaadas1 = new Training(DateTime.Parse(adatok2[0]), double.Parse(adatok2[1]), TimeSpan.Parse(adatok2[2]), int.Parse(adatok2[3]));
-                    edzesadatok.Add(adathozzaadas1);
-                }
+                
+            }
+        }
+        static void edzesadatokbetoltes()
+        {
+            string nev = bejelentkezettnev;
+            foreach (var v1 in File.ReadAllLines($"{nev}felhasznalo.txt"))
+            {
+                string[] adatok2 = v1.Split(';');
+                Training adathozzaadas1 = new Training(DateTime.Parse(adatok2[0]), double.Parse(adatok2[1]), TimeSpan.Parse(adatok2[2]), int.Parse(adatok2[3]));
+                edzesadatok.Add(adathozzaadas1);
             }
         }
     }
