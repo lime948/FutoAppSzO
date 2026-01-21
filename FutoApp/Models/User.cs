@@ -26,6 +26,7 @@ namespace FutoApp.Models
             this.Tav = tav;
             this.Idotartam = idotartam;
             this.MaxPulzus = maxPulzus;
+
         }
     }
     class Runner
