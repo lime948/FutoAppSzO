@@ -301,24 +301,7 @@ namespace FutoApp
             WriteCentered("Nyomj entert a visszatéréshez!");
             Console.ReadLine();
         }
-        static void EdzesModositasa()
-        {
-            WriteLineCentered("=== EDZÉS MÓDOSÍTÁSA ===");
-            Console.ReadLine();
-        }
-                    WriteLineCentered($"{szamlalo}. Dátum: {edzes.Datum.ToShortDateString()}, Táv: {edzes.Tav} km, Időtartam: {edzes.Idotartam}, Max pulzus: {edzes.MaxPulzus}");
-                    szamlalo++;
-                }
-                Console.WriteLine("");
-                WriteCentered("Nyomj entert a visszatéréshez!");
-                Console.ReadLine();
-            }
-            catch
-            {
-                WriteLineCentered("Hibás input! Nyomj entert a tovább lépéshez!");
-                Console.ReadLine();
-            }
-        }
+       
         static void EdzesModositasa()
         {
             try
@@ -623,6 +606,25 @@ namespace FutoApp
                         Console.ReadLine();
                     }
                     return;
+            }
+
+            void AdatokMegtekintese()
+            {
+                Console.Clear();
+                var currentUser = felhasznaloadatok[bejelentkezettlistapozicio];
+
+                WriteLineCentered("=== ADATOK MEGTEKINTÉSE ===");
+                WriteLineCentered("---------------------------");
+                WriteLineCentered($"Név: {currentUser.Nev}");
+                WriteLineCentered($"Magasság: {currentUser.Magassag} cm");
+                WriteLineCentered($"Testtömeg: {currentUser.Testtomeg} kg");
+                WriteLineCentered($"Nyugalmi pulzus: {currentUser.NyugalmiPulzus} bpm");
+                WriteLineCentered($"Célidő (5km): {currentUser.CelIdo}");
+                WriteLineCentered("---------------------------");
+
+                Console.WriteLine("");
+                WriteCentered("Nyomj entert a visszatéréshez!");
+                Console.ReadLine();
             }
 
             void Adatok()
