@@ -19,6 +19,9 @@ namespace FutoApp
             Fomenu();
         }
 
+        /// <summary>
+        /// A főmenü megjelenítése és a navigáció kezelése (Regisztráció, Bejelentkezés, Kilépés).
+        /// </summary>
         static void Fomenu()
         {
             felhasznalobetoltes();
@@ -66,6 +69,9 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// Új felhasználó regisztrálása, adatok bekérése és fájlba mentése.
+        /// </summary>
         static void Regisztralas()
         {
             try
@@ -115,6 +121,9 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// Felhasználó vagy admin bejelentkeztetése. Ellenőrzi a nevet és jelszót.
+        /// </summary>
         static void Bejelentkezes()
         {
             try
@@ -164,6 +173,9 @@ namespace FutoApp
             }
 }
 
+        /// <summary>
+        /// A bejelentkezett felhasználó menüje (Edzések kezelése, beállítások).
+        /// </summary>
         static void Bejelentkezve()
         {
             Console.Clear();
@@ -215,6 +227,9 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// Új edzésadatok bekérése és hozzáadása a listához és a felhasználó fájljához.
+        /// </summary>
         static void EdzesHozzaadas()
         {
             try
@@ -254,6 +269,9 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// A rögzített edzések listázása és összesített statisztikák (táv, idő) megjelenítése.
+        /// </summary>
         static void EdzesMegtekintese()
         {
             Console.Clear();
@@ -279,7 +297,11 @@ namespace FutoApp
             Console.WriteLine("");
             WriteCentered("Nyomj entert a visszatéréshez!");
             Console.ReadLine();
-        }      
+        }
+
+        /// <summary>
+        /// Meglévő edzés kiválasztása és adatainak módosítása, fájl frissítése.
+        /// </summary>
         static void EdzesModositasa()
         {
             try
@@ -334,6 +356,9 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// Meglévő edzés kiválasztása és törlése a listából és a fájlból.
+        /// </summary>
         static void EdzesTorlese()
         {
             try
@@ -373,6 +398,9 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// Beállítások almenü (Háttérszín, Betűszín, Adatmodosítás).
+        /// </summary>
         static void Beallitasok()
         {
             Console.Clear();
@@ -413,6 +441,11 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// Segédfüggvény: Egész szám átalakítása ConsoleColor típussá.
+        /// </summary>
+        /// <param name="v">A kiválasztott szín sorszáma.</param>
+        /// <returns>A megfelelő ConsoleColor érték.</returns>
         static ConsoleColor ValasztasToColor(int v)
         {
             switch (v)
@@ -430,7 +463,9 @@ namespace FutoApp
             }
         }
 
-
+        /// <summary>
+        /// A konzol háttérszínének beállítása a felhasználó választása alapján.
+        /// </summary>
         static int HatterMod()
         {
             Console.Clear();
@@ -471,6 +506,9 @@ namespace FutoApp
             return valasztas;
         }
 
+        /// <summary>
+        /// A konzol betűszínének beállítása a felhasználó választása alapján.
+        /// </summary>
         static int BetuszinMod()
         {
             Console.Clear();
@@ -511,6 +549,9 @@ namespace FutoApp
             return valasztas;
         }
 
+        /// <summary>
+        /// Személyes adatok kezelésére szolgáló almenü.
+        /// </summary>
         static void Adatmodositas()
         {
             Console.Clear();
@@ -550,6 +591,9 @@ namespace FutoApp
                     return;
             }
 
+            /// <summary>
+            /// Jelenlegi felhasználó adatainak megjelenítése.
+            /// </summary>
             void AdatokMegtekintese()
             {
                 Console.Clear();
@@ -564,6 +608,9 @@ namespace FutoApp
                 Console.ReadLine();
             }
 
+            /// <summary>
+            /// Személyes adatok (magasság, súly, pulzus, célidő) módosítása és mentése fájlba.
+            /// </summary>
             void Adatok()
             {
                 Console.Clear();
@@ -589,6 +636,9 @@ namespace FutoApp
                 Console.ReadLine();
             }
 
+            /// <summary>
+            /// Jelszó módosítása és mentése.
+            /// </summary>
             void Jelszo()
             {
                 Console.Clear();
@@ -606,6 +656,9 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// Adminisztrátori menü kezelése.
+        /// </summary>
         static void Admin()
         {
             Console.Clear();
@@ -645,6 +698,9 @@ namespace FutoApp
                     return;
             }
 
+            /// <summary>
+            /// Az összes regisztrált felhasználó adatainak listázása.
+            /// </summary>
             void FelhasznalokListazasa()
             {
                 Console.Clear();
@@ -676,6 +732,9 @@ namespace FutoApp
                 }
             }
 
+            /// <summary>
+            /// Felhasználó adatainak módosítása adminisztrátori joggal.
+            /// </summary>
             void FelhasznaloModositasa()
             {
                 Console.Clear();
@@ -731,6 +790,9 @@ namespace FutoApp
                 }
             }
 
+            /// <summary>
+            /// Felhasználó és a hozzá tartozó fájl törlése adminisztrátori joggal.
+            /// </summary>
             void FelhasznaloTorlese()
             {
                 Console.Clear();
@@ -767,6 +829,10 @@ namespace FutoApp
             }
         }
 
+        /// <summary>
+        /// Szöveg kiírása a konzol ablak közepére, sortöréssel a végén.
+        /// </summary>
+        /// <param name="text">A megjelenítendő szöveg.</param>
         public static void WriteLineCentered(string text)
         {
             int width = Console.WindowWidth;
@@ -777,6 +843,11 @@ namespace FutoApp
             }
             Console.WriteLine(new string(' ', leftPadding) + text);
         }
+
+        /// <summary>
+        /// Szöveg kiírása a konzol ablak közepére, sortörés nélkül.
+        /// </summary>
+        /// <param name="text">A megjelenítendő szöveg.</param>
         public static void WriteCentered(string text)
         {
             int width = Console.WindowWidth;
@@ -788,6 +859,10 @@ namespace FutoApp
             Console.Write(new string(' ', leftPadding) + text);
         }
 
+        /// <summary>
+        /// Sikerüzenet kiírása sötétzöld színnel, középre igazítva.
+        /// </summary>
+        /// <param name="text">Az üzenet szövege.</param>
         static void WriteSuccess(string text)
         {
             var oldColor = Console.ForegroundColor;
@@ -798,6 +873,10 @@ namespace FutoApp
             Console.ForegroundColor = oldColor;
         }
 
+        /// <summary>
+        /// Figyelmeztető üzenet (itt warning-ként használva a kódban, bár a név error) kiírása sötétvörös színnel.
+        /// </summary>
+        /// <param name="text">A hibaüzenet szövege.</param>
         static void WriteError(string text)
         {
             var oldColor = Console.ForegroundColor;
@@ -808,6 +887,11 @@ namespace FutoApp
             Console.ForegroundColor = oldColor;
         }
 
+        /// <summary>
+        /// Kiírja a megadott szöveget a konzol ablak közepére sötétkék színnel (Admin üzenet),
+        /// majd visszaállítja az eredeti szövegszínt.
+        /// </summary>
+        /// <param name="text">A kiírandó szöveg.</param>
         static void WriteAdmin(string text)
         {
             var oldColor = Console.ForegroundColor;
@@ -818,6 +902,9 @@ namespace FutoApp
             Console.ForegroundColor = oldColor;
         }
 
+        /// <summary>
+        /// Figyelmeztető üzenet kiírása (az eredeti kódban nem szerepelt definíció, de hívták).
+        /// </summary>
         static void WriteWarning(string text)
         {
             var oldColor = Console.ForegroundColor;
@@ -828,6 +915,10 @@ namespace FutoApp
             Console.ForegroundColor = oldColor;
         }
 
+        /// <summary>
+        /// Beolvassa a regisztrált felhasználókat a 'Felhasznalok.txt' fájlból, 
+        /// példányosítja a Runner objektumokat, és feltölti velük a 'felhasznaloadatok' listát.
+        /// </summary>
         static void felhasznalobetoltes()
         {
             foreach (var v in File.ReadAllLines("Felhasznalok.txt"))
@@ -838,6 +929,11 @@ namespace FutoApp
                 
             }
         }
+
+        /// <summary>
+        /// Betölti az éppen bejelentkezett felhasználóhoz tartozó korábbi edzéseket 
+        /// a felhasználó nevével ellátott fájlból az 'edzesadatok' listába.
+        /// </summary>
         static void edzesadatokbetoltes()
         {
             string nev = bejelentkezettnev;
