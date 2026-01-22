@@ -122,8 +122,8 @@ namespace FutoApp
         /// </summary>
         static void Bejelentkezes()
         {
-            try
-            {
+            //try
+            //{
                 Console.Clear();
                 Ui.WriteLineCentered("=== BEJELENTKEZÉS ===");
                 Ui.WriteCentered("Add meg a felhasználóneved: ");
@@ -161,13 +161,13 @@ namespace FutoApp
                     Ui.WriteError("Sikertelen bejelentkezés!");
                     Console.ReadLine();
                 }
-            }
-            catch
-            {
-                Ui.WriteLineCentered("Hibás input! Nyomj entert a tovább lépéshez!");
-                Console.ReadLine();
-            }
-}
+            //}
+            //catch
+            //{
+            //    Ui.WriteLineCentered("Hibás input! Nyomj entert a tovább lépéshez!");
+            //    Console.ReadLine();
+            //}
+        }
 
         /// <summary>
         /// A bejelentkezett felhasználó menüje (Edzések kezelése, beállítások).
@@ -238,7 +238,7 @@ namespace FutoApp
                 }
 
                 Console.Clear();
-                Ui.WriteLineCentered("Edzés hozzáadás: ");
+                Ui.WriteLineCentered("=== EDZÉS HOZZÁADÁSA ===");
                 Ui.WriteCentered("Add meg a dátumot (éééé-hh-nn): ");
                 DateTime datum = DateTime.Parse(Console.ReadLine());
                 Ui.WriteCentered("Add meg a távot (km): ");
@@ -275,13 +275,10 @@ namespace FutoApp
             int szamlalo = 1;
             double ossztav = 0;
             TimeSpan osszido = new TimeSpan();
-            for (int i = 0; i < Kontroller.edzesadatok.Count; i++)
+            foreach (var edzes in Kontroller.edzesadatok)
             {
-                foreach (var edzes in Kontroller.edzesadatok)
-                {
-                    ossztav += edzes.Tav;
-                    osszido += edzes.Idotartam;
-                }
+                ossztav += edzes.Tav;
+                osszido += edzes.Idotartam;
             }
             foreach (var edzes in Kontroller.edzesadatok)
             {
@@ -386,6 +383,8 @@ namespace FutoApp
                         }
                     }
                 }
+                Ui.WriteSuccess("Edzés sikeresen törölve!");
+                Console.ReadLine();
             }
             catch
             {
@@ -658,7 +657,7 @@ namespace FutoApp
                     Console.WriteLine("");
                     Ui.WriteCentered("Nyomj entert a visszatéréshez!");
                     Console.ReadLine();
-
+                    Admin();
                 }
                 catch
                 {

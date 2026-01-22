@@ -39,6 +39,8 @@ namespace FutoApp.Controller
         public static void edzesadatokbetoltes()
         {
             string nev = bejelentkezettnev;
+            if (nev == "admin")
+                return;
             foreach (var v1 in File.ReadAllLines($"{nev}felhasznalo.txt"))
             {
                 string[] adatok2 = v1.Split(';');

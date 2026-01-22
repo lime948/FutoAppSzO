@@ -103,13 +103,10 @@ namespace FutoApp.View
             int szamlalo = 1;
             double ossztav = 0;
             TimeSpan osszido = new TimeSpan();
-            for (int i = 0; i < Kontroller.edzesadatok.Count; i++)
-            {
-                foreach (var edzes in Kontroller.edzesadatok)
-                {
-                    ossztav += edzes.Tav;
-                    osszido += edzes.Idotartam;
-                }
+            foreach (var edzes in Kontroller.edzesadatok)
+             {
+                ossztav += edzes.Tav;
+                osszido += edzes.Idotartam;
             }
             foreach (var edzes in Kontroller.edzesadatok)
             {
